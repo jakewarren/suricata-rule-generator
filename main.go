@@ -11,19 +11,18 @@ import (
 	"github.com/jakewarren/suricata-rule-generator/generator"
 )
 
-var (
-	app = kingpin.New("suricata-rule-generator", "Generates suricata rules for IOCs.")
-
-	sid        = app.Flag("sid", "Specify a sid value to use").Short('s').Default("xxxx").String()
-	msg        = app.Flag("msg", "Specify a msg value to use").Short('m').String()
-	classtype  = app.Flag("classtype", "Specify a classtype value to use").Short('c').Default("trojan-activity").String()
-	references = app.Flag("reference", "Add a reference value. Should be in the form of 'url,example.com' or 'md5,abc123'").Short('r').Strings()
-
-	dnsQuery        = app.Command("dns-query", "Generate a signature for DNS queries")
-	dnsQueryDomains = dnsQuery.Arg("domains", "contains the key value you want to generate the signature for").Required().Strings()
-)
-
 func main() {
+	o := generator.RuleOpts{}
+
+	app := kingpin.New("suricata-rule-generator", "Generates suricata rules for IOCs.")
+
+	app.Flag("sid", "Specify a sid value to use").Short('s').Default("xxxx").StringVar(&o.Sid)
+	app.Flag("msg", "Specify a msg value to use").Short('m').StringVar(&o.Msg)
+	app.Flag("classtype", "Specify a classtype value to use").Short('c').Default("trojan-activity").StringVar(&o.Classtype)
+	app.Flag("reference", "Add a reference value. Should be in the form of 'url,example.com' or 'md5,abc123'").Short('r').StringsVar(&o.References)
+
+	dnsQuery := app.Command("dns-query", "Generate a signature for DNS queries")
+	dnsQueryDomains := dnsQuery.Arg("domains", "contains the key value you want to generate the signature for").Required().Strings()
 
 	//set up logging
 	log.SetLevel(log.DebugLevel)
@@ -37,37 +36,17 @@ func main() {
 
 	//generate signatures for dns queries
 	case dnsQuery.FullCommand():
-
-		ri := readRuleOpts()
 		for _, domain := range *dnsQueryDomains {
-			rule, err := ri.GenerateDNSQueryRule(domain)
-			if err != nil {
-				log.Warn(err.Error())
-			}
+			rule, err := o.GenerateDNSQueryRule(domain)
+			handleWarning(err)
 			fmt.Println(rule)
-
 		}
-
 	}
 
 }
 
-func readRuleOpts() generator.RuleOpts {
-	var ri generator.RuleOpts
-
-	//set the sid value, uses default value if user didn't provide one
-	ri.Sid = *sid
-
-	//set msg value if the user provided one
-	if len(*msg) > 0 {
-		ri.Msg = *msg
+func handleWarning(err error) {
+	if err != nil {
+		log.Warn(err.Error())
 	}
-
-	//set the classtype value, uses default value if user didn't provide one
-	ri.Classtype = *classtype
-
-	//set the references values
-	ri.References = *references
-
-	return ri
 }
