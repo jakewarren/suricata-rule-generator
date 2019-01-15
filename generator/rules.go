@@ -1,10 +1,8 @@
 package generator
 
 import (
-	"errors"
 	"fmt"
-
-	"github.com/asaskevich/govalidator"
+	"time"
 )
 
 //RuleOpts allow the user to add custom values to the generated rule
@@ -13,29 +11,19 @@ type RuleOpts struct {
 	Msg        string
 	Classtype  string
 	References []string
+	Metadata   []string
 }
 
-//GenerateDNSQueryRule generates a Suricata rule that alerts on a dns query for a domain
-func (r RuleOpts) GenerateDNSQueryRule(domain string) (string, error) {
-	var err error
 
-	//check if the domain provided is a valid domain
-	if !govalidator.IsURL(domain) {
-		err = errors.New("the provided value does not seem to be a domain")
-	}
+func getDefaultMetadata() []string {
+	t := time.Now()
+	metadata := make([]string, 0)
 
-	//set a default msg if not provided
-	if len(r.Msg) == 0 {
-		r.Msg = fmt.Sprintf("DNS Query for %s", domain)
-	}
+	//add created date
+	metadata = append(metadata, fmt.Sprintf("created_at %s", t.Format("2006_01_02")))
 
-	//process references
-	references := ""
-	for _, ref := range r.References {
-		references = references + fmt.Sprintf("reference:%s; ", ref)
-	}
+	//add last modified date
+	metadata = append(metadata, fmt.Sprintf("updated_at %s", t.Format("2006_01_02")))
 
-	rule := fmt.Sprintf(`alert dns any any -> any any (msg:"%s"; dns_query; content:"%s"; nocase; %sclasstype:%s; sid:%s; rev:1;)`, r.Msg, domain, references, r.Classtype, r.Sid)
-
-	return rule, err
+	return metadata
 }

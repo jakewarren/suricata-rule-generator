@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	kingpin "gopkg.in/alecthomas/kingpin.v2"
+	"gopkg.in/alecthomas/kingpin.v2"
 
 	"github.com/apex/log"
 	logcli "github.com/apex/log/handlers/cli"
@@ -19,6 +19,7 @@ func main() {
 	app.Flag("sid", "Specify a sid value to use").Short('s').Default("xxxx").StringVar(&o.Sid)
 	app.Flag("msg", "Specify a msg value to use").Short('m').StringVar(&o.Msg)
 	app.Flag("classtype", "Specify a classtype value to use").Short('c').Default("trojan-activity").StringVar(&o.Classtype)
+	app.Flag("metadata", "Add metadata values'").StringsVar(&o.Metadata)
 	app.Flag("reference", "Add a reference value. Should be in the form of 'url,example.com' or 'md5,abc123'").Short('r').StringsVar(&o.References)
 
 	dnsQuery := app.Command("dns-query", "Generate a signature for DNS queries")
