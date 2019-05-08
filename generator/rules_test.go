@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-
 func TestGetDefaultMetadata(t *testing.T) {
 	defaultMetadata := getDefaultMetadata()
 

@@ -14,7 +14,6 @@ type RuleOpts struct {
 	Metadata   []string
 }
 
-
 func getDefaultMetadata() []string {
 	t := time.Now()
 	metadata := make([]string, 0)

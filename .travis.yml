@@ -1,0 +1,24 @@
+language: go
+
+go:
+  - "1.11.x"
+  - "1.12.x"
+  - "master"
+
+matrix:
+  allow_failures:
+    - go: "master"
+
+  fast_finish: true
+
+before_script:
+  - GO_FILES=$(find . -iname '*.go' -type f | grep -v /vendor/) # All the .go files, excluding vendor/
+  - go get github.com/mgechev/revive                            # Linter
+  - go get honnef.co/go/tools/cmd/staticcheck                   # Badass static analyzer/linter
+  - go get github.com/mitchellh/gox
+
+script:
+  - test -z $(gofmt -s -l $GO_FILES | tee /dev/stderr)  # Fail if a .go file hasn't been formatted with gofmt
+  - go test -v -race ./...                              # Run all the tests with the race detector enabled
+  - staticcheck ./...                                   # "go vet on steroids" + linter
+  - revive -config .revive.toml $(go list ./...)        # one last linter
