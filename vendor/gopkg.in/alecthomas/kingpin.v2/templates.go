@@ -72,7 +72,7 @@ var SeparateOptionalFlagsUsageTemplate = `{{define "FormatCommand"}}\
 {{if .Context.SelectedCommand}}\
 usage: {{.App.Name}} {{.Context.SelectedCommand}}{{template "FormatUsage" .Context.SelectedCommand}}
 {{else}}\
-Usage: {{.App.Name}}{{template "FormatUsage" .App}}
+usage: {{.App.Name}}{{template "FormatUsage" .App}}
 {{end}}\
 
 {{if .Context.Flags|RequiredFlags}}\
