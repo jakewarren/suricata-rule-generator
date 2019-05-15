@@ -2,7 +2,6 @@ package generator
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 	"testing"
 
@@ -21,22 +20,12 @@ func formatDefaultMetadata() string {
 	var sb strings.Builder
 	md := getDefaultMetadata()
 
-	// To store the keys in slice in sorted order
-	var keys []string
-	for k := range md {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-
-	i := -1
-	for _, k := range keys {
-		i++
-		if i < len(keys)-1 {
-			sb.WriteString(fmt.Sprintf("%s %s, ", k, md[k]))
+	for i, m := range md {
+		if i < len(md)-1 {
+			sb.WriteString(fmt.Sprintf("%s %s, ", m.Key, m.Value))
 			continue
 		}
-		sb.WriteString(fmt.Sprintf("%s %s", k, md[k]))
-
+		sb.WriteString(fmt.Sprintf("%s %s", m.Key, m.Value))
 	}
 
 	return sb.String()

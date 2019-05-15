@@ -65,10 +65,8 @@ func (r RuleOpts) GenerateDNSQueryRule(domain string) (gonids.Rule, error) {
 			rule.Metas = append(rule.Metas, &gonids.Metadata{Key: k, Value: v})
 		}
 	} else {
-		defaultMetadata := getDefaultMetadata()
-		for k, v := range defaultMetadata {
-			rule.Metas = append(rule.Metas, &gonids.Metadata{Key: k, Value: v})
-		}
+		// use default metadata values
+		rule.Metas = append(rule.Metas, getDefaultMetadata()...)
 	}
 
 	rule.Revision = 1
