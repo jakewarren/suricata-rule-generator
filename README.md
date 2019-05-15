@@ -32,7 +32,7 @@ func main() {
 
 	rule, _ := o.GenerateDNSQueryRule("github.com")
 	fmt.Println(rule.String())
-	//Output: alert dns any any -> any any (msg:"DNS Query for github.com"; dns_query; content:"github.com"; nocase; metadata:created_at 2019_05_15, updated_at 2019_05_15; classtype:; sid:0; rev:1;)
+	//Output: alert dns any any -> any any (msg:"DNS Query for github.com"; dns_query; content:"github.com"; nocase; metadata:created_at 2019_05_15, updated_at 2019_05_15; sid:0; rev:1;)
 }
 ```
 ### Using the command line tool

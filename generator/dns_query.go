@@ -84,8 +84,10 @@ func (r RuleOpts) GenerateDNSQueryRule(domain string) (gonids.Rule, error) {
 		},
 	}
 
-	rule.Tags = make(map[string]string)
-	rule.Tags["classtype"] = r.Classtype
+	if len(r.Classtype) > 0 {
+		rule.Tags = make(map[string]string)
+		rule.Tags["classtype"] = r.Classtype
+	}
 
 	return rule, err
 }
