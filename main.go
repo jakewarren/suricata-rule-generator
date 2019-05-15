@@ -16,7 +16,7 @@ func main() {
 
 	app := kingpin.New("suricata-rule-generator", "Generates suricata rules for IOCs.")
 
-	app.Flag("sid", "Specify a sid value to use").Short('s').Default("xxxx").StringVar(&o.Sid)
+	app.Flag("sid", "Specify a sid value to use").Short('s').Default("1234").IntVar(&o.Sid)
 	app.Flag("msg", "Specify a msg value to use").Short('m').StringVar(&o.Msg)
 	app.Flag("classtype", "Specify a classtype value to use").Short('c').Default("trojan-activity").StringVar(&o.Classtype)
 	app.Flag("metadata", "Add metadata values'").StringsVar(&o.Metadata)
@@ -40,7 +40,7 @@ func main() {
 		for _, domain := range *dnsQueryDomains {
 			rule, err := o.GenerateDNSQueryRule(domain)
 			handleWarning(err)
-			fmt.Println(rule)
+			fmt.Println(rule.String())
 		}
 	}
 
