@@ -1,6 +1,6 @@
 # suricata-rule-generator
 [![Build Status](https://travis-ci.org/jakewarren/suricata-rule-generator.svg?branch=master)](https://travis-ci.org/jakewarren/suricata-rule-generator/)
-[![GitHub release](http://img.shields.io/github/release/jakewarren/suricata-rule-generator.svg?style=flat-square)](https://github.com/jakewarren/suricata-rule-generator/releases])
+[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](https://godoc.org/github.com/jakewarren/suricata-rule-generator/generator)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/jakewarren/suricata-rule-generator/blob/master/LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/github.com/jakewarren/suricata-rule-generator)](https://goreportcard.com/report/github.com/jakewarren/suricata-rule-generator)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shields)](http://makeapullrequest.com)
@@ -41,6 +41,13 @@ func main() {
 ❯ suricata-rule-generator dns-query github.com
 alert dns any any -> any any (msg:"DNS Query for github.com"; dns_query; content:"github.com"; nocase; metadata:created_at 2019_05_15, updated_at 2019_05_15; classtype:trojan-activity; sid:1234; rev:1;)
 ```
+
+## Supported Generators
+
+| CLI option | Function | Description |
+|  ---- | ---- | ---- |
+| dns-query | GenerateDNSQueryRule() | Generates rule that alerts on a DNS query for the specified domain |
+| ip-traffic | GenerateIPTrafficRule() | Generates rules that alerts on inbound/outbound traffic from a IP/CIDR (s) |
 
 ## License
 
