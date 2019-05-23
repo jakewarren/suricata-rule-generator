@@ -25,6 +25,9 @@ func main() {
 	dnsQuery := app.Command("dns-query", "Generate a signature for DNS queries")
 	dnsQueryDomains := dnsQuery.Arg("domains", "contains the key value you want to generate the signature for").Required().Strings()
 
+	ipTraffic := app.Command("ip-traffic", "Generate a signature for IP traffic inbound or outbound from the specified networks")
+	ipTrafficNets := ipTraffic.Arg("networks", "contains the ip addresses or CIDRs to alert on").Required().Strings()
+
 	//set up logging
 	log.SetLevel(log.DebugLevel)
 	log.SetHandler(logcli.New(os.Stderr))
@@ -42,6 +45,14 @@ func main() {
 			handleWarning(err)
 			fmt.Println(rule.String())
 		}
+	//generate signatures for ip traffic rules
+	case ipTraffic.FullCommand():
+		rules, err := o.GenerateIPTrafficRule(*ipTrafficNets)
+		handleWarning(err)
+		for _, rule := range rules {
+			fmt.Println(rule.String())
+		}
+
 	}
 
 }
