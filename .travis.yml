@@ -1,24 +1,34 @@
 language: go
 
 go:
-  - "1.11.x"
-  - "1.12.x"
-  - "master"
-
+  - 1.11.x
+  - 1.12.x
+  - master
 matrix:
   allow_failures:
-    - go: "master"
-
+  - go: master
   fast_finish: true
 
 before_script:
-  - GO_FILES=$(find . -iname '*.go' -type f | grep -v /vendor/) # All the .go files, excluding vendor/
-  - go get github.com/mgechev/revive                            # Linter
-  - go get honnef.co/go/tools/cmd/staticcheck                   # Badass static analyzer/linter
+  - GO_FILES=$(find . -iname '*.go' -type f | grep -v /vendor/)
+  - go get github.com/mgechev/revive
+  - go get honnef.co/go/tools/cmd/staticcheck
   - go get github.com/mitchellh/gox
 
 script:
-  - test -z $(gofmt -s -l $GO_FILES | tee /dev/stderr)  # Fail if a .go file hasn't been formatted with gofmt
-  - go test -v -race ./...                              # Run all the tests with the race detector enabled
-  - staticcheck ./...                                   # "go vet on steroids" + linter
-  - revive -config .revive.toml $(go list ./...)        # one last linter
+  - test -z $(gofmt -s -l $GO_FILES | tee /dev/stderr)
+  - go test -v -race ./...
+  - staticcheck ./...
+  - revive -config .revive.toml $(go list ./...)
+  - make release
+
+deploy:
+  provider: releases
+  api_key:
+    secure: C5DkKIIE+CKKbxlUkBXEKdqCOmmjrWmT0gjsa6cDyU6L8wbp1twAAbbefk1IJ0hc58Zyl9qOsVmP872JWw1rAbihr5CDiNWBXRDYh/aoe7vtZHm23Am7Q7lvzPgRJYVCilxH0HGPzc61UCTnadqgsZQa76m5rh3TI/vRo3WswRQFVRTnL610VvVBXYOvPT5kovcnBcRnsxxsWJAepLTaTFG2nmFYB1vWw9LD3IrgLmWLsLa7CWpAyUplXrQVlVTsYlv4kKfDopvPBsD+3ptQEw3HQRyb4qHxBa7KHOMQ0q9eLGtyowcuqYFfY8tpQWcyj3fUP30+gO+9/5UU6syXM3v1+DrwsBw1nJpc9RV2CqJUYmmD8UUetNt3gMJzA7GyRguQO20ytdZFSQcfq3a99X89KCax0qKWizHU7UehiLpAKNyQ9DOQ71gxUJuGYe/uX6INhKLDj6A18dpyWL4f7kzXkMTWyNvyx5wpc4biIXaTNaj0VQMnUj3DE7WHt3Y+gKzcBgIDKfPC1HF4SIQYcTGWHs/LnpjIkNJeHD3urVR55Tgog7iH1Mt159iPvDjpZzdhEvPawGHcgNq17Y4l+iCm7PWZwX73sWFA9WJkJpVmnWc5n/KVf7S87fdxXmPgmids3YOlg5rwsLsGhR80vilV7wk2pOOaG+2qeT+/egI=
+  file: 'bin/*'
+  file_glob: true
+  skip_cleanup: true
+  on:
+    repo: jakewarren/suricata-rule-generator
+    tags: true
