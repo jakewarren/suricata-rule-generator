@@ -9,6 +9,7 @@ require (
 	github.com/apex/log v0.0.0-20170216004756-fac6c51185bc
 	github.com/asaskevich/govalidator v0.0.0-20170104211126-fdf19785fd35
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/google/gonids v0.0.0-20190510211530-bacab9879ae4
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/pkg/errors v0.0.0-20161029093637-248dadf4e906
 	github.com/pmezard/go-difflib v1.0.0 // indirect

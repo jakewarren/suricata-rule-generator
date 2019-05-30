@@ -10,6 +10,8 @@ github.com/apex/log/handlers/cli
 github.com/asaskevich/govalidator
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
+# github.com/google/gonids v0.0.0-20190510211530-bacab9879ae4
+github.com/google/gonids
 # github.com/pkg/errors v0.0.0-20161029093637-248dadf4e906
 github.com/pkg/errors
 # github.com/pmezard/go-difflib v1.0.0

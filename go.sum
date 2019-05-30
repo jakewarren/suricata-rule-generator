@@ -13,6 +13,8 @@ github.com/apex/log v0.0.0-20170216004756-fac6c51185bc/go.mod h1:yA770aXIDQrhVOI
 github.com/asaskevich/govalidator v0.0.0-20170104211126-fdf19785fd35 h1:jtOyR8GH6bAopQsGgvAhTLbp2kIgGw5hJpfRoFjr6AI=
 github.com/asaskevich/govalidator v0.0.0-20170104211126-fdf19785fd35/go.mod h1:lB+ZfQJz7igIIfQNfa7Ml4HSf2uFQQRzpGGRXenZAgY=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/google/gonids v0.0.0-20190510211530-bacab9879ae4 h1:aO39F2Ag2xAfnclcCE5o5YkV/aIqb20xr+xHX37o3dM=
+github.com/google/gonids v0.0.0-20190510211530-bacab9879ae4/go.mod h1:Zq6rDS/pkt/UBg6Ol4sbNG6RTShiuWDAM3gC3yPpCsg=
 github.com/mattn/go-isatty v0.0.7 h1:UvyT9uN+3r7yLEYSlJsbQGdsaB/a0DlgWP3pql6iwOc=
 github.com/mattn/go-isatty v0.0.7/go.mod h1:Iq45c/XA43vh69/j3iqttzPXn0bhXyGjM0Hdxcsrc5s=
 github.com/pkg/errors v0.0.0-20161029093637-248dadf4e906 h1:aXc/AM323HlkOXjl3QuSO06wbXK45HrzBT+pwVOufXg=
